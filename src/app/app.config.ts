@@ -2,7 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { AppDB } from '../db';
+import { AppDB } from './db';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes)]

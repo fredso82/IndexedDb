@@ -1,0 +1,21 @@
+div {
+    display: flex;
+    flex-direction: column;
+
+    input,
+    select {
+        width: 300px;
+    }
+}
+
+.adicionar {
+    margin-top: 10px;
+}
+
+.filtro {
+    margin-top: 20px;
+}
+
+table {
+    margin: 10px 0;
+}

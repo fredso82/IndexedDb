@@ -1,7 +1,8 @@
 import { Component, OnInit, VERSION, inject } from '@angular/core';
-import { AppDB, Coleta } from '../db';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ColetaService } from './coleta.service';
+import { Coleta } from './coleta';
 
 @Component({
     selector: 'app-root',
@@ -13,30 +14,38 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent implements OnInit {
     title = 'IndexedDbExemplo';
     coletas: Coleta[] = [];
+    filtro = "";
     produto = "";
     local = "";
     quantidade = 0;
-
-    db = inject(AppDB);
+    coletaService = inject(ColetaService);
 
     constructor() {
     }
+    
     async ngOnInit()  {
-        //this.coletas = await this.db.coletas.toArray();
-        // await this.db.coletas.add({
-        //     produto: "produto 1",
-        //     local: "NO",
-        //     quantidade: 10
-        // });
-        
-        this.coletas = await this.db.coletas.toArray();
-        console.log(this.coletas);
+        await this.atualizarColetas();
+    }
+
+    private async atualizarColetas() {
+        this.coletas = await this.coletaService.obterColetas();
     }
     
     async adicionar() {
-        await this.db.coletas.add({produto: this.produto, local: this.local, quantidade: this.quantidade}); 
+        await this.coletaService.adicionarColeta({produto: this.produto, local: this.local, quantidade: this.quantidade})
+        await this.atualizarColetas();
+    }
 
-        this.coletas = await this.db.coletas.toArray();
-        console.log(this.coletas);
+    async excluir(coleta: Coleta) {
+        await this.coletaService.excluirColeta(coleta.id!);
+        await this.atualizarColetas();
+    }
+
+    async filtrar() {
+        this.coletas = await this.coletaService.filtrarColetas(this.filtro);
+    }
+
+    async limparBanco() {
+        await this.coletaService.limparColetas();
     }
 }

@@ -1,12 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Dexie, Table } from "dexie";
-
-export interface Coleta {
-    id?: number;
-    produto: string;
-    local: string;
-    quantidade: number;
-}
+import { Coleta } from "./coleta";
 
 @Injectable({
     providedIn: 'root',

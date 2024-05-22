@@ -1,6 +1,46 @@
 <!-- {{ coletas | json }} -->
 
-<input type="text" [(ngModel)]="produto" />
-<input type="text" [(ngModel)]="local" />
-<input type="text" [(ngModel)]="quantidade" />
-<button (click)="adicionar()">Adicionar</button>
+<div>
+    <label for="produto">Produto</label>
+    <input id="produto" type="text" [(ngModel)]="produto" />
+</div>
+<div>
+    <label for="local">Local</label>
+    <select id="local" [(ngModel)]="local">
+        <option>NO</option>
+        <option>RY</option>
+        <option>PR</option>
+    </select>
+</div>
+<div>
+    <label for="quantidade">Quantidade</label>
+    <input id="quantidade" type="text" [(ngModel)]="quantidade" />
+</div>
+<button class="adicionar" (click)="adicionar()">Adicionar</button>
+
+<hr />
+<div class="filtro">
+    <input type="text" [(ngModel)]="filtro" (keyup)="filtrar()" placeholder="filtro"/>
+</div>
+<table>
+    <thead>
+        <th></th>
+        <th>Produto</th>
+        <th>Local</th>
+        <th>Quantidade</th>
+    </thead>
+    <tbody>
+        @for (coleta of coletas; track coleta.id) {
+        <tr>
+            <td>
+                <button (click)="excluir(coleta)">excluir</button>
+            </td>
+            <td>{{coleta.produto}}</td>
+            <td>{{coleta.local}}</td>
+            <td>{{coleta.quantidade}}</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<button (click)="limparBanco()">Limpar Banco</button>
